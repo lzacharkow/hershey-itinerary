@@ -420,6 +420,12 @@ function GroceryList({ checks, toggle, countChecked, countCustomChecked, customI
       <div style={{ background: "#fff", borderRadius: 10, padding: "12px 14px", border: "1px solid #E8DDD4", marginBottom: 12 }}>
         <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#5B2C0E", marginBottom: 8 }}>Meal Plan</div>
         <div style={{ fontSize: "12px", lineHeight: 1.8, color: "#6B5B4E" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "36px 1fr 1fr 40px", gap: "4px", padding: "2px 0 4px", borderBottom: "1px solid #E8DDD4", marginBottom: 4 }}>
+            <span />
+            <span style={{ fontWeight: 700, color: "#8B4513" }}>Breakfast</span>
+            <span style={{ fontWeight: 700, color: "#8B4513" }}>Lunch</span>
+            <span style={{ fontWeight: 700, color: "#8B4513", textAlign: "right" }}>Dinner</span>
+          </div>
           {[
             ["Thu", "Eat before/on the road", "PB&J sandwiches", "Out"],
             ["Fri", "Eggs + toast", "Goodles mac n cheese", "Out"],
