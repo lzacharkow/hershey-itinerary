@@ -1,12 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 
 const STORAGE_KEY = "hershey-trip-checks";
+const CUSTOM_ITEMS_KEY = "hershey-trip-custom-items";
 
 const initialChecks = {};
 
 function App() {
   const [tab, setTab] = useState("itinerary");
   const [checks, setChecks] = useState(initialChecks);
+  const [customItems, setCustomItems] = useState({});
   const [expandedDays, setExpandedDays] = useState({ thu: true, fri: false, sat: false, sun: false });
   const [loaded, setLoaded] = useState(false);
 
@@ -15,6 +17,10 @@ function App() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) setChecks(JSON.parse(stored));
     } catch (e) { /* first load */ }
+    try {
+      const storedCustom = localStorage.getItem(CUSTOM_ITEMS_KEY);
+      if (storedCustom) setCustomItems(JSON.parse(storedCustom));
+    } catch (e) {}
     setLoaded(true);
   }, []);
 
@@ -23,8 +29,26 @@ function App() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(checks)); } catch (e) {}
   }, [checks, loaded]);
 
+  useEffect(() => {
+    if (!loaded) return;
+    try { localStorage.setItem(CUSTOM_ITEMS_KEY, JSON.stringify(customItems)); } catch (e) {}
+  }, [customItems, loaded]);
+
   const toggle = useCallback((id) => {
     setChecks(prev => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  const addCustomItem = useCallback((sectionId, label) => {
+    const item = { id: `c_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, label };
+    setCustomItems(prev => ({ ...prev, [sectionId]: [...(prev[sectionId] || []), item] }));
+  }, []);
+
+  const removeCustomItem = useCallback((sectionId, itemId) => {
+    setCustomItems(prev => ({
+      ...prev,
+      [sectionId]: (prev[sectionId] || []).filter(i => i.id !== itemId)
+    }));
+    setChecks(prev => { const next = { ...prev }; delete next[itemId]; return next; });
   }, []);
 
   const toggleDay = (day) => setExpandedDays(prev => ({ ...prev, [day]: !prev[day] }));
@@ -33,7 +57,10 @@ function App() {
     return Object.keys(checks).filter(k => k.startsWith(prefix) && checks[k]).length;
   };
 
-  const countTotal = (items) => items.length;
+  const countCustomChecked = (sectionId) => {
+    const items = customItems[sectionId] || [];
+    return items.filter(i => checks[i.id]).length;
+  };
 
   return (
     <div style={{ fontFamily: "'DM Sans', 'Avenir', sans-serif", background: "#FAF6F1", minHeight: "100vh", color: "#3B2314" }}>
@@ -71,20 +98,47 @@ function App() {
 
       <main style={{ maxWidth: 600, margin: "0 auto", padding: "16px" }}>
         {tab === "itinerary" && <Itinerary expandedDays={expandedDays} toggleDay={toggleDay} />}
-        {tab === "packing" && <PackingList checks={checks} toggle={toggle} countChecked={countChecked} />}
-        {tab === "grocery" && <GroceryList checks={checks} toggle={toggle} countChecked={countChecked} />}
+        {tab === "packing" && <PackingList checks={checks} toggle={toggle} countChecked={countChecked} countCustomChecked={countCustomChecked} customItems={customItems} addCustomItem={addCustomItem} removeCustomItem={removeCustomItem} />}
+        {tab === "grocery" && <GroceryList checks={checks} toggle={toggle} countChecked={countChecked} countCustomChecked={countCustomChecked} customItems={customItems} addCustomItem={addCustomItem} removeCustomItem={removeCustomItem} />}
         {tab === "tickets" && <Tickets checks={checks} toggle={toggle} />}
       </main>
     </div>
   );
 }
 
-function CheckItem({ id, label, checked, toggle, bold }) {
+function CheckItem({ id, label, checked, toggle, bold, onRemove }) {
   return (
-    <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "8px 0", cursor: "pointer", borderBottom: "1px solid #F0EAE3" }}>
-      <input type="checkbox" checked={!!checked} onChange={() => toggle(id)} style={{ marginTop: "3px", accentColor: "#8B4513", width: 18, height: 18, flexShrink: 0 }} />
-      <span style={{ fontSize: "14px", lineHeight: 1.5, textDecoration: checked ? "line-through" : "none", opacity: checked ? 0.5 : 1, fontWeight: bold ? 600 : 400 }}>{label}</span>
-    </label>
+    <div style={{ display: "flex", alignItems: "flex-start", gap: "0", borderBottom: "1px solid #F0EAE3" }}>
+      <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "8px 0", cursor: "pointer", flex: 1 }}>
+        <input type="checkbox" checked={!!checked} onChange={() => toggle(id)} style={{ marginTop: "3px", accentColor: "#8B4513", width: 18, height: 18, flexShrink: 0 }} />
+        <span style={{ fontSize: "14px", lineHeight: 1.5, textDecoration: checked ? "line-through" : "none", opacity: checked ? 0.5 : 1, fontWeight: bold ? 600 : 400 }}>{label}</span>
+      </label>
+      {onRemove && (
+        <button onClick={onRemove} style={{ background: "none", border: "none", color: "#C4A882", cursor: "pointer", padding: "8px 4px", fontSize: "16px", lineHeight: 1, flexShrink: 0, opacity: 0.6 }} title="Remove item">×</button>
+      )}
+    </div>
+  );
+}
+
+function AddItemInput({ onAdd }) {
+  const [value, setValue] = useState("");
+  const submit = () => {
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    onAdd(trimmed);
+    setValue("");
+  };
+  return (
+    <div style={{ display: "flex", gap: "6px", padding: "8px 0 4px" }}>
+      <input
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onKeyDown={e => e.key === "Enter" && submit()}
+        placeholder="Add item..."
+        style={{ flex: 1, border: "1px solid #E8DDD4", borderRadius: 6, padding: "6px 10px", fontSize: "13px", fontFamily: "inherit", outline: "none", color: "#3B2314", background: "#FAF6F1" }}
+      />
+      <button onClick={submit} style={{ background: "#8B4513", color: "#fff", border: "none", borderRadius: 6, padding: "6px 12px", fontSize: "13px", fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>+</button>
+    </div>
   );
 }
 
@@ -221,7 +275,7 @@ function Itinerary({ expandedDays, toggleDay }) {
   );
 }
 
-function PackingList({ checks, toggle, countChecked }) {
+function PackingList({ checks, toggle, countChecked, countCustomChecked, customItems, addCustomItem, removeCustomItem }) {
   const sections = [
     { id: "pa", icon: "👔", title: "Adults — Clothing Essentials (each)", items: [
       "3 long-sleeve shirts or light sweaters", "1 short-sleeve shirt (for Friday's warm afternoon)", "3 pairs of pants/jeans",
@@ -292,8 +346,9 @@ function PackingList({ checks, toggle, countChecked }) {
         Tap items to check them off. Progress saves automatically.
       </div>
       {sections.map(s => {
-        const total = countSectionItems(s.items);
-        const checked = countChecked(s.id);
+        const custom = customItems[s.id] || [];
+        const total = countSectionItems(s.items) + custom.length;
+        const checked = countChecked(s.id) + countCustomChecked(s.id);
         let checkIndex = 0;
         return (
           <div key={s.id}>
@@ -310,6 +365,10 @@ function PackingList({ checks, toggle, countChecked }) {
                 const idx = checkIndex++;
                 return <CheckItem key={`${s.id}-${idx}`} id={`${s.id}-${idx}`} label={item} checked={checks[`${s.id}-${idx}`]} toggle={toggle} />;
               })}
+              {custom.map(ci => (
+                <CheckItem key={ci.id} id={ci.id} label={ci.label} checked={checks[ci.id]} toggle={toggle} onRemove={() => removeCustomItem(s.id, ci.id)} />
+              ))}
+              <AddItemInput onAdd={(label) => addCustomItem(s.id, label)} />
             </div>
           </div>
         );
@@ -318,7 +377,7 @@ function PackingList({ checks, toggle, countChecked }) {
   );
 }
 
-function GroceryList({ checks, toggle, countChecked }) {
+function GroceryList({ checks, toggle, countChecked, countCustomChecked, customItems, addCustomItem, removeCustomItem }) {
   const sections = [
     { id: "gb", icon: "🍳", title: "Breakfast Supplies", items: [
       "Eggs (1 dozen)", "Egg bites (pre-made, microwave-friendly)", "Bread (1 loaf — doubles for lunch sandwiches)",
@@ -374,8 +433,9 @@ function GroceryList({ checks, toggle, countChecked }) {
       </div>
 
       {sections.map(s => {
-        const total = s.items.length;
-        const checked = countChecked(s.id);
+        const custom = customItems[s.id] || [];
+        const total = s.items.length + custom.length;
+        const checked = countChecked(s.id) + countCustomChecked(s.id);
         return (
           <div key={s.id}>
             <SectionHeader title={s.title} count={checked} total={total} icon={s.icon} />
@@ -383,6 +443,10 @@ function GroceryList({ checks, toggle, countChecked }) {
               {s.items.map((item, i) => (
                 <CheckItem key={`${s.id}-${i}`} id={`${s.id}-${i}`} label={item} checked={checks[`${s.id}-${i}`]} toggle={toggle} />
               ))}
+              {custom.map(ci => (
+                <CheckItem key={ci.id} id={ci.id} label={ci.label} checked={checks[ci.id]} toggle={toggle} onRemove={() => removeCustomItem(s.id, ci.id)} />
+              ))}
+              <AddItemInput onAdd={(label) => addCustomItem(s.id, label)} />
             </div>
           </div>
         );
