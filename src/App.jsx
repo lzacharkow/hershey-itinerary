@@ -11,19 +11,16 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    async function load() {
-      try {
-        const result = await window.storage.get(STORAGE_KEY);
-        if (result && result.value) setChecks(JSON.parse(result.value));
-      } catch (e) { /* first load */ }
-      setLoaded(true);
-    }
-    load();
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) setChecks(JSON.parse(stored));
+    } catch (e) { /* first load */ }
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
     if (!loaded) return;
-    window.storage.set(STORAGE_KEY, JSON.stringify(checks)).catch(() => {});
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(checks)); } catch (e) {}
   }, [checks, loaded]);
 
   const toggle = useCallback((id) => {
