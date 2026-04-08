@@ -223,57 +223,68 @@ function Itinerary({ expandedDays, toggleDay }) {
 
 function PackingList({ checks, toggle, countChecked }) {
   const sections = [
-    { id: "pa", icon: "👔", title: "Adults — Clothing (each)", items: [
-      "3 long-sleeve shirts or light sweaters", "1 short-sleeve shirt (Friday's warm day)", "3 pairs of pants/jeans",
-      "4 pairs of socks + 4 underwear", "1 medium-weight jacket or fleece", "1 packable rain jacket",
-      "1 pair of comfortable walking shoes", "Warm pajamas", "Light beanie or hat for chilly mornings"
+    { id: "pa", icon: "👔", title: "Adults — Clothing Essentials (each)", items: [
+      "3 long-sleeve shirts or light sweaters", "1 short-sleeve shirt (for Friday's warm afternoon)", "3 pairs of pants/jeans",
+      "4 pairs of socks + 4 underwear", "1 medium-weight jacket or fleece",
+      "Warm pajamas", "Beanies", "Baseball caps"
     ]},
     { id: "pb", icon: "👦", title: "Boy (age 6) — Clothing + Backups", items: [
-      "4 long-sleeve shirts + 2 backups", "1–2 short-sleeve shirts", "4 pairs of pants + 1 backup pair",
-      "6 pairs of socks + 6 underwear", "1 warm hoodie or zip-up fleece", "1 rain jacket with hood",
-      "1 pair of sneakers + 1 backup pair", "Warm pajamas (2 pairs)", "Light gloves + knit hat"
+      "4 long-sleeve shirts + 2 backups", "1–2 short-sleeve shirts for layering or the warm day",
+      "4 pairs of pants (jeans or joggers) + 1 backup pair",
+      "6 pairs of socks + 6 underwear", "1 warm hoodie or zip-up fleece", "1 jacket",
+      "Warm pajamas (2 pairs)", "Hat"
     ]},
     { id: "pc", icon: "👧", title: "Girl (age 2) — Clothing + Extra Backups", items: [
-      "5 outfits (leggings + tops) + 3 full backup outfits", "1–2 short-sleeve onesies/shirts",
-      "8+ pairs of socks", "1 warm fleece or puffy jacket", "1 toddler-sized rain jacket with hood",
-      "1 pair walking shoes + 1 backup pair", "Warm footed pajamas (2–3 pairs)", "Sun hat + warm hat"
-    ]},
-    { id: "pr", icon: "🌧️", title: "Rain & Weather Gear", items: [
-      "Rain jackets for all 4 (listed above)", "Stroller rain cover", "1 compact umbrella (backup)",
-      "Gallon-size Ziploc bags (phones, wet clothes)"
+      "5 outfits (leggings + long-sleeve tops) + 3 full backup outfits", "1–2 short-sleeve shirts for layering",
+      "8+ pairs of socks", "1 sweater", "1 jacket",
+      "1 pair of comfortable walking shoes + 1 backup pair", "Sun hat + warm hat", "Sleep sack"
     ]},
     { id: "pd", icon: "🍼", title: "Diaper & Toddler Supplies", items: [
-      "Diapers — 8–10/day (~30–35 total)", "Wipes (2 packs)", "Diaper cream",
-      "Portable changing pad", "Plastic bags for dirty diapers",
-      "⚠️ Lovey / comfort item for sleep — DO NOT FORGET",
-      "Nightlight for the hotel room", "Sippy cups / toddler water bottle"
+      "Diapers", "Wipes", "Diaper cream",
+      "Portable changing pad", "Plastic diaper pail and bags"
     ]},
     { id: "pe", icon: "🛏️", title: "Bedding & Pillows", items: [
-      "Bed 1 (queen/full): fitted sheet, flat sheet, comforter, 2 pillows + cases",
-      "Bed 2 (queen/full): fitted sheet, flat sheet, comforter, 1–2 pillows + cases",
-      "Extra light blanket for 2-year-old", "Mattress protector for kids' bed (optional)"
+      { header: "Sandy's Bed" },
+      "1 fitted sheet (queen/full)", "1 comforter or duvet (queen/full)", "1 fluffy blanket", "1 pillow",
+      "Mr elephant(s)", "Dragon girls + Bad Guys books", "Noise machine", "Mella",
+      { header: "Mommy Daddy Bed" },
+      "1 fitted sheet (queen/full)", "1 comforter or duvet (queen/full)", "2–3 pillows + pillowcases",
+      "Mr. Moo and Baby", "Gwenny bedtime books", "Mommy daddy books", "Noise machine", "Monitor?",
+      { header: "Extras" },
+      "Extra light blanket for the 2-year-old", "Mattress protector for the kids' bed (optional)"
     ]},
     { id: "pg", icon: "⚙️", title: "Gear", items: [
-      "Stroller", "Stroller blanket or bunting", "Reusable water bottles (4)",
-      "Small backpack / daypack", "Portable phone charger + cables"
+      "Rolling cart", "Gwen and Sandy's water bottles",
+      "Small backpack / daypack for daily essentials", "Phone chargers + cables", "Portable charger block"
     ]},
     { id: "pba", icon: "🚿", title: "Bathroom Supplies", items: [
-      "4 bath towels + 2 hand towels + 4 washcloths", "1–2 extra towels",
-      "Shampoo + conditioner", "Body wash / soap", "Toothbrushes + toothpaste (adult + kid)",
-      "Deodorant (each adult)", "Hairbrush / comb + hair ties", "Lotion", "Razor",
-      "Contact solution / glasses", "Toddler toothbrush + training toothpaste",
-      "Hooded towel for toddler bath", "Non-slip bath mat"
+      { header: "Towels" },
+      "3 bath towels", "2 hand towels", "4 washcloths",
+      { header: "Toiletries — Travel Size" },
+      "Shampoo + conditioner", "Dove soap", "Deodorant", "Lotion", "Face wash",
+      { header: "Toiletries — Normal Size" },
+      "Toothbrushes + toothpaste (adult + kid-size)", "Floss picks", "Hairbrush / comb",
+      "Hair dryer", "Hair ties / clips", "Razor",
+      "Mommy's glasses", "Mommy's retainers", "Mommy's makeup"
     ]},
     { id: "ph", icon: "🩹", title: "Health & Safety", items: [
-      "Sunscreen SPF 30+", "Children's Tylenol / ibuprofen", "Antihistamine (Benadryl/Zyrtec)",
-      "Band-aids", "Hand sanitizer", "Tissues"
+      "Face + body sunscreen", "Children's Tylenol / ibuprofen", "Adult ibuprofen", "Dayquil",
+      "Band-aids", "Hand sanitizer",
+      "Sandy's minty meds", "Sandy's allergy meds", "Vitamins for Sandy + Gwen",
+      "Leslie's meds", "Daddy's allergy meds"
     ]},
     { id: "pi", icon: "🚗", title: "Car / Entertainment", items: [
-      "Tablets + headphones", "Coloring supplies or small toys (6-year-old)",
-      "Board books or soft toys (2-year-old)", "Light blanket for the car",
-      "1 full change of clothes per person IN THE CAR"
+      "iPad + headphones", "Coloring supplies", "Book for Gwen",
+      "1 full change of clothes per family member in the car"
+    ]},
+    { id: "pk", icon: "🍽️", title: "Kitchen", items: [
+      "Pacifiers", "Fruit and berry spray", "Trash bags", "Knife and cutting board",
+      "Sponge", "Ziplocs", "Gwen's smoothie cups", "Gwen's spoon",
+      "Tissues", "Paper towels", "Wet wipes for car + everyday"
     ]},
   ];
+
+  const countSectionItems = (items) => items.filter(item => typeof item === "string").length;
 
   return (
     <div>
@@ -281,22 +292,28 @@ function PackingList({ checks, toggle, countChecked }) {
         Tap items to check them off. Progress saves automatically.
       </div>
       {sections.map(s => {
-        const total = s.items.length;
+        const total = countSectionItems(s.items);
         const checked = countChecked(s.id);
+        let checkIndex = 0;
         return (
           <div key={s.id}>
             <SectionHeader title={s.title} count={checked} total={total} icon={s.icon} />
             <div style={{ background: "#fff", borderRadius: 10, padding: "4px 14px", border: "1px solid #E8DDD4" }}>
-              {s.items.map((item, i) => (
-                <CheckItem key={`${s.id}-${i}`} id={`${s.id}-${i}`} label={item} checked={checks[`${s.id}-${i}`]} toggle={toggle} bold={item.includes("⚠️")} />
-              ))}
+              {s.items.map((item, i) => {
+                if (typeof item === "object" && item.header) {
+                  return (
+                    <div key={`${s.id}-h-${i}`} style={{ fontSize: "13px", fontWeight: 700, color: "#8B4513", padding: "10px 0 4px", borderBottom: "1px solid #F0EAE3", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+                      {item.header}
+                    </div>
+                  );
+                }
+                const idx = checkIndex++;
+                return <CheckItem key={`${s.id}-${idx}`} id={`${s.id}-${idx}`} label={item} checked={checks[`${s.id}-${idx}`]} toggle={toggle} />;
+              })}
             </div>
           </div>
         );
       })}
-      <div style={{ background: "#F0EAE3", borderRadius: 10, padding: "12px 14px", marginTop: 16, fontSize: "13px", color: "#6B5B4E" }}>
-        <strong>Leave at home:</strong> Swimsuits & water shoes (water parks closed in April), shorts, sandals, heavy winter coat.
-      </div>
     </div>
   );
 }
@@ -304,34 +321,28 @@ function PackingList({ checks, toggle, countChecked }) {
 function GroceryList({ checks, toggle, countChecked }) {
   const sections = [
     { id: "gb", icon: "🍳", title: "Breakfast Supplies", items: [
-      "Eggs (1 dozen)", "Egg bites (pre-made, microwave-friendly)", "Bread (1 loaf)",
-      "Butter", "Pancake mix (just-add-water)", "Maple syrup (small bottle)",
-      "Cereal (1 box)", "Milk (half gallon)", "Bananas (1 bunch)",
-      "Strawberries (1 large container)", "Blueberries (1 container)",
-      "Yogurt cups (12+ — plan for every meal)"
+      "Eggs (1 dozen)", "Egg bites (pre-made, microwave-friendly)", "Bread (1 loaf — doubles for lunch sandwiches)",
+      "Butter", "Pancake mix (just-add-water kind like Bisquick Shake 'n Pour)", "Maple syrup (small bottle)",
+      "Cereal (1 for Sandy, 1 for Leslie)", "Almond milk", "Bananas (1 bunch)",
+      "Raspberries", "Blackberries", "Apples", "Clementines",
+      "Yogurt cups (12+ — mix of adult and kid flavors, plan for every meal)",
+      "Once upon a farm pouches"
     ]},
     { id: "gl", icon: "🥪", title: "Lunch Supplies", items: [
-      "Peanut butter (or sun butter)", "Jelly / jam", "Tortillas (for quesadillas)",
-      "Goodles mac n cheese (2–3 boxes)", "Shredded cheese (for quesadillas)",
-      "Baby carrots or snap peas", "Apple slices or clementines"
-    ]},
-    { id: "gt", icon: "👶", title: "Toddler Food", items: [
-      "Squeeze fruit/veggie pouches (8–10)", "Puffs or baby crackers",
-      "Goldfish or animal crackers", "Applesauce cups (4-pack)",
-      "Cheerios or dry cereal for snacking"
+      "Peanut butter (or sun butter if the school is nut-free)", "Jelly / jam",
+      "Tortillas (small pack — for quesadillas)",
+      "Goodles mac n cheese (2–3 boxes)", "Shredded cheese (for quesadillas)"
     ]},
     { id: "gs", icon: "🍿", title: "Snacks (whole family)", items: [
-      "Goldfish or Cheez-Its", "Granola bars", "Fruit snacks",
-      "Pretzels", "Trail mix or mixed nuts (adults)", "String cheese"
+      "Salty snacks", "Pretzels", "Mixed nuts (for the adults)", "String cheese"
     ]},
     { id: "gd", icon: "🥤", title: "Drinks", items: [
-      "Juice boxes (small pack)", "K-cups (your preferred brand)", "Bottled water (1 case)"
+      "Bottled water (1 case, or plan to refill bottles)", "Apple juice"
     ]},
-    { id: "gk", icon: "🍽️", title: "Kitchen Supplies to Bring", items: [
-      "Paper towels (1 roll)", "Paper plates + napkins", "Plastic cups for kids",
-      "Gallon-size Ziploc bags", "Aluminum foil", "Trash bags (small roll)",
-      "Dish soap (travel size) + sponge", "1 sharp knife", "Cooking spray or olive oil",
-      "Salt & pepper"
+    { id: "gk", icon: "🍽️", title: "Kitchen Supplies", items: [
+      "Paper plates + napkins", "Plastic cups for the kids",
+      "Aluminum foil", "Dish soap", "Cooking spray",
+      "Salt & pepper", "Earth balance"
     ]},
   ];
 
@@ -341,10 +352,10 @@ function GroceryList({ checks, toggle, countChecked }) {
         <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#5B2C0E", marginBottom: 8 }}>Meal Plan</div>
         <div style={{ fontSize: "12px", lineHeight: 1.8, color: "#6B5B4E" }}>
           {[
-            ["Thu", "Eat on the road", "PB&J", "Out"],
+            ["Thu", "Eat before/on the road", "PB&J sandwiches", "Out"],
             ["Fri", "Eggs + toast", "Goodles mac n cheese", "Out"],
-            ["Sat", "Pancakes + fruit", "Quesadillas", "Out"],
-            ["Sun", "Eggs + cereal", "On the road", "Home"],
+            ["Sat", "Pancakes or cereal + fruit", "Quesadillas", "Out"],
+            ["Sun", "Eggs + toast or cereal", "On the road / leftovers", "Home"],
           ].map(([day, b, l, d], i) => (
             <div key={i} style={{ display: "grid", gridTemplateColumns: "36px 1fr 1fr 40px", gap: "4px", padding: "2px 0" }}>
               <strong style={{ color: "#8B4513" }}>{day}</strong>
@@ -355,7 +366,7 @@ function GroceryList({ checks, toggle, countChecked }) {
       </div>
 
       <div style={{ background: "#E8F5E9", borderRadius: 10, padding: "12px 14px", marginBottom: 12, fontSize: "13px", color: "#2E7D32" }}>
-        🏪 <strong>Shop at Giant Food</strong> — 1250 Cocoa Ave, Hershey (6 AM–11 PM). Nature's Promise organic line covers eggs, yogurt, berries & toddler pouches. They carry Goodles.
+        🏪 <strong>Shop at Giant Food</strong> — 1250 Cocoa Ave, Hershey (6 AM–11 PM daily). Nature's Promise organic line covers eggs, yogurt, berries, and toddler pouches. They also carry Goodles and Annie's. You can order ahead for free pickup at giantfoodstores.com.
       </div>
 
       <div style={{ fontSize: "13px", color: "#9B8B7A", marginBottom: 12, textAlign: "center" }}>
