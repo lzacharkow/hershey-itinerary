@@ -519,7 +519,7 @@ function Tickets({ checks, toggle }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {[
           { label: "Hersheypark", url: "https://www.hersheypark.com/tickets/", note: "Buy online to skip the line" },
-          { label: "Chocolate World", url: "https://www.chocolateworld.com/experiences", note: "Spring Bundle saves $$$" },
+          { label: "Chocolate World", url: "https://www.chocolateworld.com/tickets.html", note: "Spring Bundle saves $$$" },
           { label: "Hershey Gardens", url: "https://www.hersheygardens.org/plan-your-visit/tickets/", note: "Also available at the door" },
           { label: "Indian Echo Caverns", url: "https://www.indianechocaverns.com/", note: "Walk-up tickets at the door" },
         ].map(s => (
