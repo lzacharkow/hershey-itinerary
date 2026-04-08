@@ -521,26 +521,27 @@ function Tickets({ checks, toggle }) {
         <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#5B2C0E", margin: "0 0 10px" }}>🍽️ Dinner Options by Day</h3>
         {[
           { day: "Thursday", color: "#D4A574", options: [
-            { name: "Simply Greek", desc: "Gyros, falafel, Greek salads. Very vegetarian-friendly." },
-            { name: "Chipotle", desc: "Sofritas bowls, veggie burritos, chips & guac." },
-            { name: "Noodles & Co", desc: "Mac & cheese for kids, pesto cavatappi for adults." },
+            { name: "Simply Greek", desc: "Gyros, falafel, Greek salads. Very vegetarian-friendly.", map: "https://www.google.com/maps/search/?api=1&query=Simply+Greek+Hershey+PA" },
+            { name: "Chipotle", desc: "Sofritas bowls, veggie burritos, chips & guac.", map: "https://www.google.com/maps/search/?api=1&query=Chipotle+Hershey+PA" },
+            { name: "Noodles & Co", desc: "Mac & cheese for kids, pesto cavatappi for adults.", map: "https://www.google.com/maps/search/?api=1&query=Noodles+and+Company+Hershey+PA" },
           ]},
           { day: "Friday", color: "#E8B86D", options: [
-            { name: "What If... Of Hershey", desc: "Casual savory & sweet crepes. Great vegetarian options." },
-            { name: "Red Robin", desc: "Veggie burgers, bottomless fries. Easy after a park day." },
-            { name: "Panera Bread", desc: "Soups, salads, mac & cheese for kids." },
+            { name: "What If... Of Hershey", desc: "Casual savory & sweet crepes. Great vegetarian options.", map: "https://www.google.com/maps/search/?api=1&query=What+If+Of+Hershey+PA" },
+            { name: "Red Robin", desc: "Veggie burgers, bottomless fries. Easy after a park day.", map: "https://www.google.com/maps/search/?api=1&query=Red+Robin+Hershey+PA" },
+            { name: "Panera Bread", desc: "Soups, salads, mac & cheese for kids.", map: "https://www.google.com/maps/search/?api=1&query=Panera+Bread+Hershey+PA" },
           ]},
           { day: "Saturday", color: "#A8C5A0", options: [
-            { name: "Khana Indian Bistro", desc: "Dal, paneer, veggie biryani, naan. Tons of vegetarian options." },
-            { name: "The Mill", desc: "Good beer, great food, praised for vegetarian options." },
-            { name: "Del Taco", desc: "Bean burritos, veggie tacos. Cheap & easy." },
+            { name: "Khana Indian Bistro", desc: "Dal, paneer, veggie biryani, naan. Tons of vegetarian options.", map: "https://www.google.com/maps/search/?api=1&query=Khana+Indian+Bistro+Hershey+PA" },
+            { name: "The Mill", desc: "Good beer, great food, praised for vegetarian options.", map: "https://www.google.com/maps/search/?api=1&query=The+Mill+Hershey+PA" },
+            { name: "Del Taco", desc: "Bean burritos, veggie tacos. Cheap & easy.", map: "https://www.google.com/maps/search/?api=1&query=Del+Taco+Hershey+PA" },
           ]},
         ].map(d => (
           <div key={d.day} style={{ background: "#fff", borderRadius: 10, padding: "12px 14px", border: "1px solid #E8DDD4", marginBottom: 10 }}>
             <div style={{ fontSize: "13px", fontWeight: 700, color: "#fff", background: d.color, display: "inline-block", borderRadius: 4, padding: "2px 8px", marginBottom: 8 }}>{d.day}</div>
             {d.options.map((o, i) => (
               <div key={i} style={{ fontSize: "13px", marginBottom: 4, lineHeight: 1.5 }}>
-                <strong>{o.name}</strong> — <span style={{ color: "#6B5B4E" }}>{o.desc}</span>
+                <a href={o.map} target="_blank" rel="noopener noreferrer" style={{ color: "#5B2C0E", fontWeight: 700, textDecoration: "none" }}>{o.name}</a> — <span style={{ color: "#6B5B4E" }}>{o.desc}</span>
+                <a href={o.map} target="_blank" rel="noopener noreferrer" style={{ color: "#8B4513", fontSize: "11px", marginLeft: 4, textDecoration: "none" }}>📍 Map</a>
               </div>
             ))}
           </div>
