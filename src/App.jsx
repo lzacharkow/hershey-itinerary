@@ -509,12 +509,22 @@ function Tickets({ checks, toggle }) {
         ))}
       </div>
 
-      <div style={{ marginTop: 16, fontSize: "13px", color: "#6B5B4E", lineHeight: 1.6 }}>
-        <strong>Where to buy:</strong>
-        <div style={{ marginTop: 4 }}>• Hersheypark: hersheypark.com</div>
-        <div>• Chocolate World: chocolateworld.com</div>
-        <div>• Hershey Gardens: hersheygardens.org or at the door</div>
-        <div>• Indian Echo Caverns: walk-up tickets at the door</div>
+      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#5B2C0E", margin: "16px 0 10px" }}>🎫 Where to Buy</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {[
+          { label: "Hersheypark", url: "https://www.hersheypark.com/tickets/", note: "Buy online to skip the line" },
+          { label: "Chocolate World", url: "https://www.chocolateworld.com/experiences", note: "Spring Bundle saves $$$" },
+          { label: "Hershey Gardens", url: "https://www.hersheygardens.org/plan-your-visit/tickets/", note: "Also available at the door" },
+          { label: "Indian Echo Caverns", url: "https://www.indianechocaverns.com/", note: "Walk-up tickets at the door" },
+        ].map(s => (
+          <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#fff", borderRadius: 10, padding: "12px 14px", border: "1px solid #E8DDD4", textDecoration: "none", color: "#3B2314" }}>
+            <div>
+              <div style={{ fontSize: "14px", fontWeight: 700, color: "#5B2C0E" }}>{s.label}</div>
+              <div style={{ fontSize: "12px", color: "#9B8B7A", marginTop: 2 }}>{s.note}</div>
+            </div>
+            <span style={{ fontSize: "18px", color: "#8B4513" }}>→</span>
+          </a>
+        ))}
       </div>
 
       <div style={{ marginTop: 20 }}>
