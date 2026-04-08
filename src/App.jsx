@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 const STORAGE_KEY = "hershey-trip-checks";
 const CUSTOM_ITEMS_KEY = "hershey-trip-custom-items";
 const TAB_KEY = "hershey-trip-tab";
+const DAYS_KEY = "hershey-trip-expanded-days";
 
 const initialChecks = {};
 
@@ -11,7 +12,10 @@ function App() {
   const setTab = (t) => { setTabState(t); localStorage.setItem(TAB_KEY, t); };
   const [checks, setChecks] = useState(initialChecks);
   const [customItems, setCustomItems] = useState({});
-  const [expandedDays, setExpandedDays] = useState({ thu: true, fri: false, sat: false, sun: false });
+  const [expandedDays, setExpandedDays] = useState(() => {
+    try { const s = localStorage.getItem(DAYS_KEY); if (s) return JSON.parse(s); } catch (e) {}
+    return { thu: true, fri: false, sat: false, sun: false };
+  });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -53,7 +57,11 @@ function App() {
     setChecks(prev => { const next = { ...prev }; delete next[itemId]; return next; });
   }, []);
 
-  const toggleDay = (day) => setExpandedDays(prev => ({ ...prev, [day]: !prev[day] }));
+  const toggleDay = (day) => setExpandedDays(prev => {
+    const next = { ...prev, [day]: !prev[day] };
+    try { localStorage.setItem(DAYS_KEY, JSON.stringify(next)); } catch (e) {}
+    return next;
+  });
 
   const countChecked = (prefix) => {
     return Object.keys(checks).filter(k => k.startsWith(prefix) && checks[k]).length;
