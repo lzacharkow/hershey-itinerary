@@ -516,6 +516,36 @@ function Tickets({ checks, toggle }) {
         <div>• Hershey Gardens: hersheygardens.org or at the door</div>
         <div>• Indian Echo Caverns: walk-up tickets at the door</div>
       </div>
+
+      <div style={{ marginTop: 20 }}>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#5B2C0E", margin: "0 0 10px" }}>🍽️ Dinner Options by Day</h3>
+        {[
+          { day: "Thursday", color: "#D4A574", options: [
+            { name: "Simply Greek", desc: "Gyros, falafel, Greek salads. Very vegetarian-friendly." },
+            { name: "Chipotle", desc: "Sofritas bowls, veggie burritos, chips & guac." },
+            { name: "Noodles & Co", desc: "Mac & cheese for kids, pesto cavatappi for adults." },
+          ]},
+          { day: "Friday", color: "#E8B86D", options: [
+            { name: "What If... Of Hershey", desc: "Casual savory & sweet crepes. Great vegetarian options." },
+            { name: "Red Robin", desc: "Veggie burgers, bottomless fries. Easy after a park day." },
+            { name: "Panera Bread", desc: "Soups, salads, mac & cheese for kids." },
+          ]},
+          { day: "Saturday", color: "#A8C5A0", options: [
+            { name: "Khana Indian Bistro", desc: "Dal, paneer, veggie biryani, naan. Tons of vegetarian options." },
+            { name: "The Mill", desc: "Good beer, great food, praised for vegetarian options." },
+            { name: "Del Taco", desc: "Bean burritos, veggie tacos. Cheap & easy." },
+          ]},
+        ].map(d => (
+          <div key={d.day} style={{ background: "#fff", borderRadius: 10, padding: "12px 14px", border: "1px solid #E8DDD4", marginBottom: 10 }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "#fff", background: d.color, display: "inline-block", borderRadius: 4, padding: "2px 8px", marginBottom: 8 }}>{d.day}</div>
+            {d.options.map((o, i) => (
+              <div key={i} style={{ fontSize: "13px", marginBottom: 4, lineHeight: 1.5 }}>
+                <strong>{o.name}</strong> — <span style={{ color: "#6B5B4E" }}>{o.desc}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
