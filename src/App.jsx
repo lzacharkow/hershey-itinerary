@@ -2,11 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 
 const STORAGE_KEY = "hershey-trip-checks";
 const CUSTOM_ITEMS_KEY = "hershey-trip-custom-items";
+const TAB_KEY = "hershey-trip-tab";
 
 const initialChecks = {};
 
 function App() {
-  const [tab, setTab] = useState("itinerary");
+  const [tab, setTabState] = useState(() => localStorage.getItem(TAB_KEY) || "itinerary");
+  const setTab = (t) => { setTabState(t); localStorage.setItem(TAB_KEY, t); };
   const [checks, setChecks] = useState(initialChecks);
   const [customItems, setCustomItems] = useState({});
   const [expandedDays, setExpandedDays] = useState({ thu: true, fri: false, sat: false, sun: false });
